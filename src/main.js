@@ -1,22 +1,27 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from '@/router'
-import store from '@/store'
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "@/router";
+import store from "@/store";
+import firebase from "firebase";
+import firebaseConfig from "./config/firebase";
+const forumApp = createApp(App);
 
-const forumApp = createApp(App)
+firebase.initializeApp(firebaseConfig);
 
-const requireComponent = require.context("./components", true, /App[A-Z]\w+\.(vue|js)$/)
+const requireComponent = require.context(
+  "./components",
+  true,
+  /App[A-Z]\w+\.(vue|js)$/
+);
 requireComponent.keys().forEach(function (fileName) {
-    let baseComponentConfig = requireComponent(fileName)
-    baseComponentConfig = baseComponentConfig.default || baseComponentConfig
-    const baseComponentName = baseComponentConfig.name || (
-        fileName
-            .replace(/^.+\//, '')
-            .replace(/\.\w+$/, '')
-    )
-    forumApp.component(baseComponentName, baseComponentConfig)
-})
+  let baseComponentConfig = requireComponent(fileName);
+  baseComponentConfig = baseComponentConfig.default || baseComponentConfig;
+  const baseComponentName =
+    baseComponentConfig.name ||
+    fileName.replace(/^.+\//, "").replace(/\.\w+$/, "");
+  forumApp.component(baseComponentName, baseComponentConfig);
+});
 
-forumApp.use(router)
+forumApp.use(router);
 forumApp.use(store);
-forumApp.mount('#app')
+forumApp.mount("#app");
