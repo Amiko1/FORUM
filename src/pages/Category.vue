@@ -1,35 +1,43 @@
 <template>
   <h1>{{ category.name }}</h1>
-  <ForumList
-      :title="category.name"
-      :forums="getForumsForCategory(category)"
-  />
+  <ForumList :title="category.name" :forums="getForumsForCategory(category)" />
 </template>
 
 <script>
-import ForumList from '@/components/ForumList'
+import ForumList from "@/components/ForumList";
+import { findById } from "@/helpers";
 export default {
   components: {
-    ForumList
+    ForumList,
   },
   props: {
     id: {
       required: true,
-      type: String
-    }
+      type: String,
+    },
   },
   computed: {
-    category () {
-      return this.$store.state.categories.find(category => category.id === this.id)
-    }
+    category() {
+      return findById(this.$store.state.categories, this.id) || {};
+    },
   },
   methods: {
-    getForumsForCategory (category) {
-      return this.$store.state.forums.filter(forum => forum.categoryId === category.id)
-    }
-  }
-}
+    getForumsForCategory(category) {
+      return this.$store.state.forums.filter(
+        (forum) => forum.categoryId === category.id
+      );
+    },
+  },
+  mounted() {
+    console.log("KAKA", this.$store.state.forums);
+  },
+  async created() {
+    const category = await this.$store.dispatch("fetchCategory", {
+      id: this.id,
+    });
+    this.$store.dispatch("fetchForums", { ids: category.forums });
+  },
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
