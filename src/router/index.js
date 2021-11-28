@@ -8,7 +8,7 @@ import Forum from "@/pages/Forum";
 import Category from "@/pages/Category";
 import Profile from "@/pages/Profile";
 import { createRouter, createWebHistory } from "vue-router";
-
+import store from '@/store'
 const routes = [
   {
     path: "/",
@@ -83,7 +83,8 @@ const routes = [
   },
 ];
 
-export default createRouter({
+
+const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior(to) {
@@ -93,3 +94,11 @@ export default createRouter({
     return scroll;
   },
 });
+
+
+router.beforeEach(() => {
+  store.dispatch('unsubscribeAllSnapshots')
+})
+
+
+export default router
