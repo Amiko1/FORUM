@@ -1,21 +1,27 @@
 <template>
-  <the-navbar/>
+  <the-navbar />
   <div class="container">
     <router-view></router-view>
   </div>
-
 </template>
 
 <script>
-import TheNavbar from '@/components/TheNavbar'
+import TheNavbar from "@/components/TheNavbar";
+import { mapActions } from "vuex";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    TheNavbar
-  }
-}
+    TheNavbar,
+  },
+  methods: {
+    ...mapActions(["fetchAuthUser"]),
+  },
+  created() {
+    this.fetchAuthUser();
+  },
+};
 </script>
 
 <style>
-@import 'assets/style.css'
+@import "assets/style.css";
 </style>

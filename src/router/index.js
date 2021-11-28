@@ -4,7 +4,7 @@ import ThreadCreate from "@/pages/ThreadCreate";
 import ThreadEdit from "@/pages/ThreadEdit";
 import NotFound from "@/pages/NotFound";
 import Forum from "@/pages/Forum";
-import sourceData from "@/data.json";
+// import sourceData from "@/data.json";
 import Category from "@/pages/Category";
 import Profile from "@/pages/Profile";
 import { createRouter, createWebHistory } from "vue-router";
@@ -50,25 +50,25 @@ const routes = [
     name: "ThreadShow",
     component: ThreadShow,
     props: true,
-    beforeEnter(to, from, next) {
-      // check if thread exists
-      const threadExists = sourceData.threads.find(
-        (thread) => thread.id === to.params.id
-      );
-      // if exists continue
-      if (threadExists) {
-        return next();
-      } else {
-        next({
-          name: "NotFound",
-          params: { pathMatch: to.path.substring(1).split("/") },
-          // preserve existing query and hash
-          query: to.query,
-          hash: to.hash,
-        });
-      }
-      // if doesnt exist redirect to not found
-    },
+    // beforeEnter(to, from, next) {
+    //   // check if thread exists
+    //   const threadExists = sourceData.threads.find(
+    //     (thread) => thread.id === to.params.id
+    //   );
+    //   // if exists continue
+    //   if (threadExists) {
+    //     return next();
+    //   } else {
+    //     next({
+    //       name: "NotFound",
+    //       params: { pathMatch: to.path.substring(1).split("/") },
+    //       // preserve existing query and hash
+    //       query: to.query,
+    //       hash: to.hash,
+    //     });
+    //   }
+    //   // if doesnt exist redirect to not found
+    // },
   },
   {
     path: "/form/:forumId/thread/create",

@@ -4,9 +4,11 @@ import router from "@/router";
 import store from "@/store";
 import firebase from "firebase";
 import firebaseConfig from "./config/firebase";
-const forumApp = createApp(App);
+import FontAwesome from '@/plugins/FontAwesome'
 
 firebase.initializeApp(firebaseConfig);
+
+const forumApp = createApp(App);
 
 const requireComponent = require.context(
   "./components",
@@ -24,4 +26,6 @@ requireComponent.keys().forEach(function (fileName) {
 
 forumApp.use(router);
 forumApp.use(store);
+forumApp.use(FontAwesome);
+
 forumApp.mount("#app");
